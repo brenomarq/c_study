@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+// Função que confere se o arquivo existe
 int arquivo_existe(const char *nome) {
   FILE *file;
 
@@ -24,8 +25,9 @@ int main() {
 
   // Executa o programa enquanto o usuário pedir pra finalizar
   do {
+    // Confere se o arquivo não existe e precisa ser criado
     if (!arquivo_existe(NOME_ARQUIVO)) {
-      // Abre o arquivo em mode de escrita
+      // Cria o arquivo
       file = fopen(NOME_ARQUIVO, "w");
 
       // Confere se o arquivo foi criado
@@ -44,19 +46,17 @@ int main() {
     printf("Digite a matrícula do aluno: ");
     scanf("%d", &matricula);
 
-    media = 0; // Média iniciada para cada aluno
+    media = 0; // Média reiniciada para cada aluno
 
     printf("Informe as notas do aluno:\n");
     for (int i = 0; i < 4; i++) {
       printf("Nota %d: ", i + 1);
       scanf("%f", &notas[i]); // Recebe cada nota
-      media += notas[i];
+      media += notas[i]; // Acumula as notas à média
     }
     media /= 4; // Calcula a média geral do aluno
 
-    // TODO 3: Salvar os dados do aluno
-    // -> Informar para o usuário o status da ação
-    // Abre o arquivo em mode de anexação
+    // Abre o arquivo em modo de anexação
     file = fopen(NOME_ARQUIVO, "a");
 
     // Confere se o arquivo foi aberto com êxito
@@ -65,7 +65,7 @@ int main() {
       return 1;
     }
 
-    // Escreve os dados no arquivo
+    // Insere os dados do aluno no arquivo csv
     fprintf(file, "%d,%.2f,%.2f,%.2f,%.2f,%.2f\n",
     matricula, notas[0], notas[1], notas[2], notas[3], media);
 
@@ -78,6 +78,7 @@ int main() {
     // Confere se o programa deve continuar a execução
     printf("Digite [1] caso deseje continuar: ");
     scanf("%d", &continuar_programa);
+    printf("\n");
 
   } while (continuar_programa == 1);
 
