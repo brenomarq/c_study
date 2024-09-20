@@ -44,6 +44,8 @@ int main() {
   float notas[4], media;
   FILE *file;
 
+  printf("Olá, usuário! Digite os dados do aluno:\n");
+
   // Executa o programa enquanto o usuário pedir pra finalizar
   do {
     // Confere se o arquivo não existe ou está vazio para definir as colunas
