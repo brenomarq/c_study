@@ -1,11 +1,11 @@
 #include <stdio.h>
 
 // Função que confere se o arquivo existe
-int arquivo_existe(const char *nome) {
+int arquivo_existe(const char *nome_arquivo) {
   FILE *file;
 
   // Tenta abrir o arquivo
-  file = fopen(nome, "r");
+  file = fopen(nome_arquivo, "r");
 
   // Arquivo inexistente
   if (file == NULL) return 0;
@@ -17,6 +17,27 @@ int arquivo_existe(const char *nome) {
   return 1;
 }
 
+// Função que confere se o arquivo está vazio
+int arquivo_vazio(const char *nome_arquivo) {
+  FILE *file;
+  int c;
+
+  // Confere se o arquivo existe e retorna como vazio caso inexistente
+  if (!arquivo_existe(nome_arquivo)) return 1;
+
+  // Abre o arquivo em modo de leitura
+  file = fopen(nome_arquivo, "r");
+
+  // Tenta ler o primeiro caractere do arquivo
+  c = fgetc(file);
+
+  // Arquivo vazio
+  if (c == EOF) return 1;
+
+  // Arquivo escrito
+  return 0;
+}
+
 int main() {
   const char NOME_ARQUIVO[] = "notas.csv";
   int matricula, continuar_programa = 1;
@@ -25,8 +46,8 @@ int main() {
 
   // Executa o programa enquanto o usuário pedir pra finalizar
   do {
-    // Confere se o arquivo não existe e precisa ser criado
-    if (!arquivo_existe(NOME_ARQUIVO)) {
+    // Confere se o arquivo não existe ou está vazio para definir as colunas
+    if (!arquivo_existe(NOME_ARQUIVO) || arquivo_vazio(NOME_ARQUIVO)) {
       // Cria o arquivo
       file = fopen(NOME_ARQUIVO, "w");
 
